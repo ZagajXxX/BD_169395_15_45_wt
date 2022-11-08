@@ -1,0 +1,14 @@
+Zadanie 1
+CREATE TABLE postac (id_postaci INT NOT NULL PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(40), rodzajmysql> ALTER TABLE izba AD; wiek INT);
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (1'Bjorn','wiking',10690212,35);
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (2,'Drozd','ptak',11031202,1);
+INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (3,'Tesciowa','kobieta',10030422,88);
+
+Zadanie 2
+CREATE TABLE walizka (id_walizki INT NOT NULL PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT NOT NULL);
+
+ALTER TABLE walizka ADD FOREIGN KEY (id_wlasciciela) REFERENCES postac (id_postaci);
+ALTER TABLE walizka  ALTER kolor SET DEFAULT 'rozowy';
+
+Zadanie 3
+CREATE TABLE izba (adres_budynku VARCHAR(80) NOT NULL, nazwa_izby varchar(80) not null, metraz int, wlasciciel int, FOREIGN KEY (wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET null, PRIMARY KEY(adres_budynku, nazwa_izby));
