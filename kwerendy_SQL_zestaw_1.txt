@@ -1,14 +1,47 @@
 Zadanie 1
-CREATE TABLE postac (id_postaci INT NOT NULL PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(40), rodzajmysql> ALTER TABLE izba AD; wiek INT);
-INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (1'Bjorn','wiking',10690212,35);
-INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (2,'Drozd','ptak',11031202,1);
-INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (3,'Tesciowa','kobieta',10030422,88);
+1. CREATE TABLE postac (id_postaci INT NOT NULL PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(40), wiek INT);
+2. INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (1'Bjorn','wiking',10690212,35);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (2,'Drozd','ptak',11031202,1);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (3,'Tesciowa','kobieta',10030422,68);
+3. UPDATE postac SET wiek=88 WHERE id_postaci = 3;
 
 Zadanie 2
-CREATE TABLE walizka (id_walizki INT NOT NULL PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT NOT NULL);
-
+1. CREATE TABLE walizka (id_walizki INT NOT NULL PRIMARY KEY AUTO_INCREMENT, pojemnosc INT, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT NOT NULL);
 ALTER TABLE walizka ADD FOREIGN KEY (id_wlasciciela) REFERENCES postac (id_postaci);
-ALTER TABLE walizka  ALTER kolor SET DEFAULT 'rozowy';
+
+2. ALTER TABLE walizka  ALTER kolor SET DEFAULT 'rozowy';
 
 Zadanie 3
-CREATE TABLE izba (adres_budynku VARCHAR(80) NOT NULL, nazwa_izby varchar(80) not null, metraz int, wlasciciel int, FOREIGN KEY (wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET null, PRIMARY KEY(adres_budynku, nazwa_izby));
+1. CREATE TABLE izba (adres_budynku VARCHAR(80) NOT NULL, nazwa_izby varchar(80) not null, metraz int, wlasciciel int, FOREIGN KEY (wlasciciel) REFERENCES postac(id_postaci) ON DELETE SET null, PRIMARY KEY(adres_budynku, nazwa_izby));
+2. ALTER TABLE izba add column kolor varchar(20) After metraz;
+3. INSERT INTO izba (adres_budynku, nazwa_izby, metraz,kolor,wlasciciel) Values ('sloneczna','vip','54','bialy',1);
+
+Zadanie 4
+1. CREATE TABLE przetwory (id_przetworu int not null primary key auto_increment, rok_produkcji YEAR DEFAULT(1654), id_wykonawcy int, zawartosc varchar(40),dodatek varchar(40) default 'papryczka chilli', id_konsumenta int);
+ALTER TABLE przetwory ADD FOREIGN KEY (id_wykonawcy) REFERENCES postac (id_postaci);
+ALTER TABLE przetwory ADD FOREIGN KEY (id_konsumenta) REFERENCES postac (id_postaci);
+2. INSERT INTO przetwory (id_przetworu,rok_produkcji,id_wykonawcy,zawartosc,dodatek,id_konsumenta) values (1,,1,'bigos',,3);
+3.INSERT INTO izba (adres_budynku, nazwa_izby, metraz,kolor,wlasciciel) Values ('sloneczna','spizarnia','54','bialy',1);
+
+Zadanie 5
+1. INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (5,'Astrid','wiking',10450522,28);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (4,'Edgar','wiking',10590212,45);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (6,'Walkiria','wiking',10550522,40);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (7,'Inge','wiking',10250522,72);
+   INSERT INTO postac (id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES (8,'Ulf','wiking',10350522,62);
+2. CREATE TABLE statek (nazwa_statku int primary key not null auto_increment, rodzaj_statku ENUM('drakkar','byrding','knara','snekkar'), data_wodowania date, max_ladownosc int);
+3. Insert INTO statek (nazwa_statku,rodzaj_statku,data_wodowania,max_ladownosc) VALUES ('Ku Bogu','drakkar',10720802,35);
+   Insert INTO statek (nazwa_statku,rodzaj_statku,data_wodowania,max_ladownosc) VALUES ('Handel','byrding',10920924,10);
+4. alter table postac add column funkcja varchar(20);
+5. update postac set funkcja='kapitan' where id_postaci=1;
+6. alter table postac add column ktory_statek varchar(20);
+   ALTER TABLE postac ADD FOREIGN KEY (ktory_statek) REFERENCES statek (nazwa_statku);
+7. update postac set ktory_statek='Ku Bogu' where id_postaci=1;
+   update postac set ktory_statek='Ku Bogu' where id_postaci=5;
+   update postac set ktory_statek='Ku Bogu' where id_postaci=7;
+   update postac set ktory_statek='Ku Bogu' where id_postaci=8;
+   update postac set ktory_statek='Ku Bogu' where id_postaci=2;
+   update postac set ktory_statek='handel' where id_postaci=4;
+   update postac set ktory_statek='handel' where id_postaci=6;
+8. delete from izba where nazwa_izby='spizarnia';
+9. drop table izba;
