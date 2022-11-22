@@ -1,0 +1,67 @@
+zadanie 1
+
+DELETE FROM postac WHERE wiek='42';
+DELETE FROM postac WHERE wiek='32';
+
+
+
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_2;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABLE postac MODIFY id_postaci INT;
+ALTER TABLE postac DROP PRIMARY KEY;
+
+zadanie 2
+
+ALTER TABLE postac ADD pesel CHAR(11) NOT NULL FIRST;
+UPDATE postac SET pesel='13846127824' where id_postaci='1';
+UPDATE postac SET pesel='12846127825' where id_postaci='2';
+UPDATE postac SET pesel='12846127828' where id_postaci='3';
+UPDATE postac SET pesel='12844337810' where id_postaci='5';
+UPDATE postac SET pesel='12111427835' where id_postaci='6';
+UPDATE postac SET pesel='19836553233' where id_postaci='8';
+ALTER TABLE postac ADD PRIMARY KEY(pesel);
+
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
+INSERT INTO postac (pesel, id_postaci, nazwa, rodzaj, data_ur, wiek) VALUES ('98219399851','9','Gertruda Nieszczera', 'syrena', '1140-12-22', '54');
+
+zadanie 3
+
+UPDATE postac SET nazwa_statku='Ku Bogu' where nazwa regexp 'a';
+UPDATE postac SET nazwa_statku='Ku Bogu' where nazwa regexp 'a' AND rodzaj != 'kobieta';
+UPDATE postac SET nazwa_statku='Ku Bogu' where nazwa LIKE 'a';
+
+UPDATE statek SET max_ladownosc = max_ladownosc * 0.7 where data_wodowania >= '1901-01-01' AND data_wodowania <='2000-12-31';
+
+ALTER TABLE postac ADD CHECK(wiek <= 1000);
+
+zadanie 4
+
+ALTER TABLE postac MODIFY rodzaj enum('wiking','ptak','kobieta','syrena', 'waz');
+
+INSERT INTO postac (pesel,id_postaci,nazwa,rodzaj,data_ur,wiek) 
+    -> VALUES('21372478737', '10', 'Loko', 'waz', '1100-10-31', '89');
+    
+CREATE TABLE Marynarz SELECT*FROM postac WHERE nazwa_statku IS NOT NULL;
+ALTER TABLE Marynarz ADD PRIMARY KEY(pesel);
+ALTER TABLE Marynarz ADD FOREIGN KEY (nazwa_statku) REFERENCES statek(nazwa_statku);
+ALTER TABLE Marynarz ADD CHECK(wiek > 0 AND wiek <= 1000);
+
+zadanie 5
+
+UPDATE postac SET nazwa_statku = NULL where nazwa_statku = 'Ku Bogu';
+UPDATE Marynarz SET nazwa_statku = NULL where nazwa_statku = 'Ku Bogu';
+DELETE FROM postac WHERE id_postaci='7';
+
+ALTER TABLE postac DROP FOREIGN KEY postac_ibfk_1;
+ALTER TABLE Marynarz DROP FOREIGN KEY Marynarz_ibfk_1;
+ALTER TABLE postac DROP COLUMN nazwa_statku;
+ALTER TABLE Marynarz DROP COLUMN nazwa_statku;
+DROP TABLE statek;
+
+CREATE TABLE zwierz ( id INT PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(20), wiek INT);
+    
+
+INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='ptak';
+INSERT INTO zwierz (nazwa, wiek)  SELECT nazwa, wiek FROM postac  WHERE rodzaj='waz';
