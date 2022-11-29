@@ -24,7 +24,6 @@ Zadanie 4
 
 SELECT DISTINCT rodzaj FROM zasob WHERE rodzaj IS NOT NULL;
 SELECT rodzaj FROM zasob GROUP BY rodzaj HAVING COUNT()  2;
- HAVING COUNT SIĘ PRZYDA
 SELECT CONCAT(nazwa, ' - ', rodzaj) FROM kreatura WHERE rodzaj LIKE 'wi%';
 SELECT iloscwaga FROM zasob WHERE YEAR(dataPozyskania) BETWEEN 2000 AND 2007;
 
